@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+      "outDir": "./dist",
+      "target": "es6",
+      "module": "commonjs",
+      "strict": true,
+      "esModuleInterop": true
+    },
+    "files": ["./src/app.ts"],
+    "exclude": ["node_modules", "dist"],
+    "ts-node": {
+      "esm": true
+    }
+}
+  
