@@ -12,7 +12,7 @@ app.use(cors())
    .use('/', userRouter)
 
 app.listen(process.env.PORT, () => {
-   console.log(`Server listening on port ${process.env.PORT}.`);
+   console.log(`Server listening on port ${process.env.PORT ?? 4001}.`);
 });
 
 //to drop port: sudo kill -9 `sudo lsof -t -i:4000`
