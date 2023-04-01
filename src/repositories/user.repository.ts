@@ -66,6 +66,58 @@ async function createSession(user: users, token: string): Promise<sessions> {
   });
 }
 
+
+async function deleteAllSessions(userId: number | null) {
+  const user = await prisma.users.findUnique({
+    where: {
+      id: userId!,
+    },
+  });
+
+  if (!user) {
+    throw new Error('User not found.');
+  }
+
+  return prisma.sessions.deleteMany({
+    where: {
+      userid: user.id,
+    },
+  });
+}
+
+async function deleteUserByIdAndEmailAndPassword(id: number, email: string, password: string) {
+  const user = await prisma.users.findUnique({
+    where: {
+      id,
+    },
+  });
+
+  if (!user || user.email !== email) {
+    throw new Error('User not found,..');
+  }
+  const passwordMatch = await bcrypt.compare(password, user.password);
+  if (!passwordMatch) {
+    throw new Error('Invalid password...');
+  }
+
+  return prisma.users.delete({
+    where: {
+      id,
+    },
+  });
+}
+
+async function getManyEmail() {
+  const users = await prisma.users.findMany({
+    select: {
+      email: true,
+    },
+  });
+
+  return users.map((user) => user.email);
+}
+
+
 export const loginRepository = {
-  createUser, getUserByEmail, getUserByEmailAndPassword, createSession
+  createUser, getManyEmail, getUserByEmail, getUserByEmailAndPassword, createSession, deleteAllSessions, deleteUserByIdAndEmailAndPassword
 };

@@ -8,11 +8,9 @@ dotenv.config();
 const app = express();
 app.use(cors())
    .use(express.json())
-   .get('/', (req, res) => res.send('Ok!' + alert('oi!')))
    .use('/', userRouter)
 
-app.listen(process.env.PORT, () => {
-   console.log(`Server listening on port ${process.env.PORT ?? 4001}.`);
-});
+const port = process.env.PORT || 5000;
+app.listen(port, () => console.log(`Server running in port: ${port}`));
 
 //to drop port: sudo kill -9 `sudo lsof -t -i:4000`

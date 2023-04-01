@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { loginService } from '../services/user.services';
+import { loginRepository } from '../repositories/user.repository';
 
 async function postUser(req: Request, res: Response) {
   const { email, password } = req.body;
@@ -41,6 +42,119 @@ export async function postLogin(req: Request, res: Response) {
   }
 }
 
+export async function getEmail(req: Request, res: Response) {
+  const { email } = req.body;
+
+  try {
+    //send email
+    const getByEmail = await loginRepository.getUserByEmail(email);
+
+    //recive email
+    res.json({
+      getByEmail
+    }).status(200);
+    ;
+  } catch (error) {
+    console.error(error);
+    res.status(401).json({ message: 'Invalid email' });
+  }
+}
+
+export async function deleteSessions(req: Request, res: Response) {
+  const { email, password } = req.body;
+  const getByEmail = await loginRepository.getUserByEmail(email)
+
+  try {
+    //send email and password
+    const { session } = await loginService.login(email, password);
+    const userId = session.userid;
+    loginRepository.deleteAllSessions(userId);
+    const returning = {
+      Action: `Delete sessions of email: ${getByEmail?.email}`
+    }
+
+    //recive email 
+    res.json({
+      returning
+    }).status(200);
+    ;
+  } catch (error) {
+    console.error(error);
+    res.status(401).json({ message: 'Invalid email or password' });
+  }
+}
+
+export async function deleteUser(req: Request, res: Response) {
+  const { email, password } = req.body;
+  try {
+    //send email and password
+    const getByEmail = await loginRepository.getUserByEmail(email)
+    const id = getByEmail?.id
+
+    if (id === undefined) {
+      throw new Error('User not found');
+    }
+    
+    await loginRepository.deleteUserByIdAndEmailAndPassword(id, email, password)
+
+    const returning = {
+      Action: `Delete user: ${getByEmail?.email}`
+    }
+    
+    //recive email
+    res.json({
+      returning
+    }).status(200);
+    ;
+  } catch (error) {
+    console.error(error);
+    res.status(401).json({ message: 'Invalid email or password' });
+  }
+}
+
+async function getAllEmail(req: Request, res: Response) {
+  try {
+    const getAll = await loginRepository.getManyEmail()
+  
+    res.json({
+      getAll
+    }).status(200);
+    ;
+  } catch (error) {
+    console.error(error);
+    res.status(401).json({ message: 'Invalid email or password' });
+  }
+}
+
+// export async function newPassword(req: Request, res: Response) {
+//   const { email, password } = req.body;
+//   try {
+//     //send email and password
+//     const getByEmail = await loginRepository.getUserByEmail(email)
+//     const id = getByEmail?.id
+
+//     if (id === undefined) {
+//       throw new Error('User not found');
+//     }
+    
+//     await loginRepository.deleteUserByIdAndEmailAndPassword(id, email, password)
+
+//     const returning = {
+//       Action: `Delete user: ${getByEmail?.email}`
+//     }
+    
+//     //recive email
+//     res.json({
+//       returning
+//     }).status(200);
+//     ;
+//   } catch (error) {
+//     console.error(error);
+//     res.status(401).json({ message: 'Invalid email or password' });
+//   }
+// }
+
+
 export const loginController = {
-  postUser, postLogin
+  postUser, postLogin, getEmail, deleteSessions, deleteUser, getAllEmail
 };
