@@ -5,12 +5,6 @@
         "src": "/(.*)",
         "dest": "/dist/app.js"
       }
-    ],
-    "env": {
-      "NODE_ENV": "production",
-      "DATABASE_URL": "postgres://tamuzeus:hA8O5etJDilq@ep-bold-star-139613.us-east-2.aws.neon.tech/neondb",
-      "JWT_SECRET": "seu_jwt_secrete_aqui",
-      "PORT": "9000"
-    }
+    ]
   }
   
