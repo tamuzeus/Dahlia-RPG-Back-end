@@ -5,7 +5,7 @@
   "main": "dist/app.js",
   "type": "commonjs",
   "engines": {
-    "node" : "18"
+    "node": "18"
   },
   "scripts": {
     "start": "node dist/app.js",
@@ -16,6 +16,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@vercel/node": "^2.10.2",
     "bcrypt": "^5.1.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
