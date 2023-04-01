@@ -8,7 +8,7 @@ dotenv.config();
 const app = express();
 app.use(cors())
    .use(express.json())
-   .get('/health', (req, res) => res.send('Ok!'))
+   .get('/', (req, res) => res.send('Ok!' + alert('oi!')))
    .use('/', userRouter)
 
 app.listen(process.env.PORT, () => {
