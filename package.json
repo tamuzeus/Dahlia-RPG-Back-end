@@ -9,8 +9,8 @@
   },
   "scripts": {
     "start": "node dist/app.js",
+    "build": "tsc --outDir ./dist",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "devStart": "nodemon dist/app.js",
     "dev": "nodemon --inspect dist/app.js"
   },
   "author": "",
