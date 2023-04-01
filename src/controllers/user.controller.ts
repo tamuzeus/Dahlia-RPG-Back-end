@@ -11,11 +11,16 @@ async function postUser(req: Request, res: Response) {
     //recive newuser after validations
     res.json(newUser).status(200);
   } catch (error: any) {
-    res.status(500).json({ message: error.message });
+    console.log(error.message)
+    if(error.message === 'Email already registered'){
+      res.status(409).json({ message: error.message })
+    }else{
+      res.status(500).json({ message: error.message });
+    }
   }
 }
 
-export async function getLogin(req: Request, res: Response) {
+export async function postLogin(req: Request, res: Response) {
   const { email, password } = req.body;
 
   try {
@@ -27,7 +32,6 @@ export async function getLogin(req: Request, res: Response) {
 
     //recive user and token after validations
     res.json({
-      user: userLogin,
       session
     }).status(200);
     ;
@@ -38,5 +42,5 @@ export async function getLogin(req: Request, res: Response) {
 }
 
 export const loginController = {
-  postUser, getLogin
+  postUser, postLogin
 };

@@ -38,7 +38,7 @@ export async function login(email: string, password: string) {
   try {
     //recive promise for compare and get email and password
     const user = await loginRepository.getUserByEmailAndPassword(email, password);
-
+    
     //create JWT
     const token = jwt.sign({ userId: user.id }, SECRET, {
       expiresIn: '2h',
