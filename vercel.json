@@ -17,16 +17,6 @@
       "DATABASE_URL": "postgres://tamuzeus:hA8O5etJDilq@ep-bold-star-139613.us-east-2.aws.neon.tech/neondb",
       "JWT_SECRET": "seu_jwt_secrete_aqui",
       "PORT": "9000"
-    },
-    "devDependencies": {
-      "@types/bcrypt": "^5.0.0",
-      "@types/cors": "^2.8.13",
-      "@types/express": "^4.17.17",
-      "@types/jsonwebtoken": "^9.0.1",
-      "@types/node": "^18.15.11",
-      "ts-node": "^10.9.1",
-      "ts-node-dev": "^2.0.0",
-      "typescript": "^5.0.3"
     }
   }
   
